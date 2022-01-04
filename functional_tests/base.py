@@ -1,6 +1,5 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 import time
 import os
@@ -8,7 +7,7 @@ import os
 MAX_WAIT = 10
 
 
-class NewVisitorTest(StaticLiveServerTestCase):
+class FunctionalTest(StaticLiveServerTestCase):
     def setUp(self) -> None:
         self.browser = webdriver.Firefox()
         staging_server = os.environ.get("STAGING_SERVER")
@@ -31,6 +30,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
                     raise e
                 time.sleep(0.5)
 
+
+class NewVisitorTest(FunctionalTest):
     def test_can_start_a_list_for_one_user(self):
         # Edith has heard about a cool new online to-do app. She goes to check out
         # its homepage
@@ -105,6 +106,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         # Satisfied, they both go back to sleep
 
+
+class LayoutAndStylingTest(FunctionalTest):
     def test_layout_and_styling(self):
         # Edith goes to home page
         self.browser.get(self.live_server_url)
@@ -124,3 +127,21 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.assertAlmostEqual(
             inputbox.location["x"] + inputbox.size["width"] / 2, 512, delta=10
         )
+
+
+class ItemValidationTest(FunctionalTest):
+    def test_cannot_add_empty_list_items(self):
+        # Edith goes to the home page and accidentally tries to submit an empty list item.
+        # She hits Enter on the empty input box
+
+        # The home page refreshes, and there is an error message saying that lis items
+        # cannot be blank
+
+        # She tries again with some text for the item, which now works
+
+        # Perversely, she now decides to submit a second blank list item
+
+        # She recieves a similar warning on the list page
+
+        # And she can correct it by filling some text in
+        self.fail("write me")
