@@ -2,7 +2,7 @@ from django import forms
 from django.forms import widgets
 from lists.models import Item
 
-EMPTY_ITEM_ERROR = "You can't have an empty list item"
+EMPTY_ITEM_ERROR = "You can't have an empty list item!"
 
 
 class ItemForm(forms.models.ModelForm):
@@ -18,14 +18,3 @@ class ItemForm(forms.models.ModelForm):
             )
         }
         error_messages = {"text": {"required": EMPTY_ITEM_ERROR}}
-
-
-# class ItemForm(forms.Form):
-#     item_text = forms.CharField(
-#         widget=forms.TextInput(
-#             attrs={
-#                 "placeholder": "Enter a to-do item",
-#                 "class": "form-control input-lg",
-#             }
-#         )
-#     )
